@@ -12,7 +12,7 @@ get_pack_config = (filename) ->
     when 'example'
       package_name : 'ExamplePackage'
       bundle : 
-        greater : path.join root_path, "src", filename
+        boxer : path.join root_path, "src", filename
 
 
     else
