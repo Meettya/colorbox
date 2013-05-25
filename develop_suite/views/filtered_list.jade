@@ -1,0 +1,32 @@
+extends includes/layout
+
+block content
+
+  script(src='vendor/head.load-0.99.min.js')
+
+  :coffeescript
+    head.js 'vendor/backbone-1.0.0.js',
+      "vendor/backbone.marionette-1.0.2.min.js",
+      "vendor/backbone.viewmodel.js",
+      "vendor/jade_runtime-0.26.2.min.js",
+      { filtered_list : "js/filtered_list.js?#{+new Date()}" }
+    
+  
+  // main loader
+  :coffeescript
+    head.ready "filtered_list", ->
+      {list_wiget} = ExamplePackage
+
+      # if DOM ready
+      $ ->
+        list_wiget '#content'
+
+  .container
+    h1 Filtered list example
+
+    .span12
+
+      #content
+
+      
+
