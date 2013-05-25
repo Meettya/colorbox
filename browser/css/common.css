@@ -1,0 +1,19 @@
+body {
+  padding-top: 60px;
+}
+#result {
+  font: bold italic 110% sans-serif;
+  color: #00f;
+}
+#config-input {
+  padding: 20px;
+}
+#color-boxes {
+  display: inline;
+  list-style-type: none;
+}
+.colorbox__rectangle__styled {
+  margin: 20px;
+  float: left;
+  border: 2px solid;
+}

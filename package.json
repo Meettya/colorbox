@@ -1,0 +1,36 @@
+{
+  "name": "bb_vm_demo",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Backbone.ViewModel demo project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "backbone": "*",
+    "backbone.marionette": "*",
+    "backbone.viewmodel": "*",
+    "jquery": "*"
+  },
+  "devDependencies": {
+    "clinch": "*",
+    "mocha": "*",
+    "chai": "*",
+    "grunt": "*",
+    "coffee-script": "*",
+    "express": "*",
+    "stylus": "*",
+    "jade": "*",
+    "lodash": "*",
+    "livereload2": "*",
+    "fs-extra": "*",
+    "ncp": "*",
+    "async": "*",
+    "nodemon": "*",
+    "commander": "~1.1.1"
+  }
+}
