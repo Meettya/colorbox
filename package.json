@@ -1,7 +1,8 @@
 {
-  "name": "frontend-boilerplate",
+  "name": "bb_vm_demo",
+  "private": true,
   "version": "0.0.1",
-  "description": "Quickstart frontend developer environment: coffeescript, jade and stylus on node.js with twitter bootstrap and livereload2.",
+  "description": "Backbone.ViewModel demo project",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -9,7 +10,12 @@
   "repository": "",
   "author": "",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "backbone": "*",
+    "backbone.marionette": "*",
+    "backbone.viewmodel": "*",
+    "jquery": "*"
+  },
   "devDependencies": {
     "clinch": "*",
     "mocha": "*",
@@ -24,6 +30,7 @@
     "fs-extra": "*",
     "ncp": "*",
     "async": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+    "commander": "~1.1.1"
   }
 }

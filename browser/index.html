@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Backdone.ViewModel demo</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <script src="vendor/jquery-2.0.0.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/lodash-1.2.1.min.js"></script>
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container"><a data-toggle="collapse" data-target=".nav-collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a href="index.html" class="brand">Backdone.ViewModel demo</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="rectangle.html">Rectangles</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- add active toggler to navbar--><script type="text/javascript">
+(function() {
+  $(function() {
+    var page_path;
+
+    page_path = /([^/]+)$/.exec(this.location.pathname);
+    $(".nav li a[href='" + page_path[1] + "']").parents('li').addClass('active');
+    return null;
+  });
+
+}).call(this);
+</script>
+    <div class="container">
+      <h1>Backdone.ViewModel demo page</h1>
+      <div class="span6">
+        <p>This is sute of different example of Backbone.ViewModel.</p>
+        <p>
+           
+          Main point - some Views may use one Model through different ViewModel, 
+          in this case all Views will synchronized internally.
+        </p>
+        <p>
+           
+          With ViewModel its unneded any external message bus or mediators or somthing else.
+          All projections of one model tied in one complecs and do care of itself state.
+        </p>
+        <p>
+           
+          I think its cool :)
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

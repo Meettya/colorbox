@@ -1,0 +1,32 @@
+extends includes/layout
+
+block content
+
+  script(src='vendor/head.load-0.99.min.js')
+
+  :coffeescript
+    head.js 'vendor/backbone-1.0.0.js',
+      "vendor/backbone.marionette-1.0.2.min.js",
+      "vendor/backbone.viewmodel.js",
+      "vendor/jade_runtime-0.26.2.min.js",
+      { rectangles : "js/rectangles.js?#{+new Date()}" }
+    
+  
+  // main loader
+  :coffeescript
+    head.ready "rectangles", ->
+      {boxer} = ExamplePackage
+
+      # if DOM ready
+      $ ->
+        boxer '#content', color: 'yellow', size: 45
+
+  .container
+    h1 Dancing colorbox
+
+    .span12
+
+      #content
+
+      
+

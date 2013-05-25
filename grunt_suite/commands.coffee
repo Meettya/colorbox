@@ -30,7 +30,7 @@ proc_extender = (proc, cb) =>
 
 # Run jade compiler
 run_jade = (args, cb) =>
-  proc_extender spawn('node', ['./node_modules/.bin/jade'].concat(args)), cb
+  proc_extender spawn('jade', args), cb
 
 #Run nodemon for one directory only
 run_nodemon = (filename, args, cb) =>
@@ -123,7 +123,7 @@ Before use it create gh-pages brunch first
 git checkout --orphan gh-pages
 git commit -am'* first gh-pages commit'
 
-than return to master
+then return to master
 
 ###
 update_gh_pages = (document_directory, gh_pages_branch, main_cb) ->
