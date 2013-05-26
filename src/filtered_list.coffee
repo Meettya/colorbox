@@ -8,13 +8,41 @@ AppLayout = require './rectangles/app_layout'
 
 BaseModel = require './filtered_list/base_model'
 
+ItemViewModel      = require './filtered_list/item_vm'
+ItemCollection    = require './filtered_list/item_collection'
+ItemCollectionView = require './filtered_list/item_collection_view'
 
-init_fn = (main_elem, init_model_state) ->
+InputViewModel  = require './filtered_list/input_vm'
+InputView       = require './filtered_list/input_view'
+
+buildFakeData = (num) ->
+  _.times num, ->
+    text : Faker.Name.findName()
+
+
+init_fn = (main_elem) ->
 
   layout = new AppLayout
   layout.render()
   $(main_elem).append layout.el
 
-  base_model = new BaseModel init_model_state
+  data = buildFakeData 1000
+  
+  base_model = new BaseModel { data }
+
+
+  input_vm  = new InputViewModel base_model
+  item_vm   = new ItemViewModel base_model
+
+  models = new ItemCollection item_vm.get 'data'
+  # its only one interaction point 
+  # on 400 elements reset tooks only 50-100ms
+  # and up to 800ms to render long list
+  item_vm.on 'change:data', -> models.reset item_vm.get 'data'
+
+
+  layout.inputRegion.show new InputView model : input_vm
+  layout.contentRegion.show new ItemCollectionView collection: models
+
 
 module.exports = init_fn

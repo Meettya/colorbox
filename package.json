@@ -14,7 +14,8 @@
     "backbone": "*",
     "backbone.marionette": "*",
     "backbone.viewmodel": "*",
-    "jquery": "*"
+    "jquery": "*",
+    "backbone-pageable": "~1.2.4"
   },
   "devDependencies": {
     "clinch": "*",
