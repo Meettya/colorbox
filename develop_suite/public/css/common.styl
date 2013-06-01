@@ -18,14 +18,16 @@ body
   border  2px solid
 
 .sortable__container
+  border          1px solid #d3d3d3
+  min-width       202px
+  max-width       220px
+  overflow-y      scroll
+  overflow-x      hidden
   float           left
   list-style-type none
   margin          0 10px 0 0
   padding         0 0 2.5em
-  height          300px
-  min-width       202px
-  overflow        scroll
-  border          1px solid #d3d3d3
+  height          150px
   padding         10px 15px 5px 5px
 
 .sortable__item
@@ -37,3 +39,8 @@ body
   border      1px solid #d3d3d3
   white-space pre-line
 
+.sortable__container__big
+  float           left
+
+.footer
+  height  5em

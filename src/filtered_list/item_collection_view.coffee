@@ -11,41 +11,80 @@ module.exports = class RectangleCollectionView extends Marionette.CollectionView
   itemView  : ItemView
 
   # our cool pager
-  pager :
+  @PAGER_SETTING :
     start   : 0 
-    by_page : 20
+    by_page : 8
  
-
   initialize: ->
     @$el.sortable().disableSelection()
+    # get from class data
+    @pager = _.cloneDeep @constructor::constructor.PAGER_SETTING
+    @_down_counter_ = 0
+    @_is_real_event = false
+ 
+  onBeforeRender: ->
+    console.log 'onBeforeRender'
+    @_down_counter_ = 0
+    @$el.children().waypoint 'destroy'
+    @$el.scrollTop(0)
 
-    # may be pull it to controller?
-    @scrolled_ts = null
-    @last_scrolled_ts = null
+  onRender: ->
 
-    @$el.on 'scroll', (evnt) =>  
-      @scrolled_ts = evnt.timeStamp
+    console.log 'onRender'
+
+    doLog = (dir) => 
+
+      console.log @_down_counter_
+      console.log 'doLog'
+
       
-    @$el.on 'mousewheel', (evnt, delta, deltaX, deltaY) => 
-      if @scrolled_ts isnt @last_scrolled_ts
-        console.log 'moved'
-        @last_scrolled_ts = @scrolled_ts
-      else
-        console.log 'stopped'
+      unless @_is_real_event
+        @_is_real_event = true
+        return null
 
+      if dir is 'down'
+        console.log 'add part'
+
+
+        console.log @$el.find(':last-child')
+
+        @$el.find(':last-child').waypoint 'destroy'
+
+        is_continues  = @showCollection ++@_down_counter_ * @pager.by_page
+
+        console.log is_continues
+
+        if is_continues
+
+          console.log @$el.find(':last-child')
+
+          @$el.find(':last-child').waypoint handler : doLog, context : 'ul',  offset: '100%', continuous: false
       
-      # console.log 'wheeled', evnt, delta, deltaX, deltaY, @scrolled_ts
 
-  
+    @$el.find(':last-child').waypoint handler : doLog, context : 'ul',  offset: '100%'
+
+
   # Internal method to loop through each item in the
   # collection view and show it
   showCollection : (start = @pager.start, count = @pager.by_page) ->
-    for idx in [start...count]
+
+    stop = start + count
+    console.log 'showCollection'
+    console.log start, stop
+
+    for idx in [start...stop]
       if item = @collection.models[idx]
         Item_View = @getItemView item
         @addItemView item, Item_View, idx
-
+      else 
+        return false
       null
     null
+
+    true
+
+
+
+    
 
 

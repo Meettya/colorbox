@@ -34,6 +34,13 @@ errorHandler = (err, req, res, next) ->
   res.status 500
   res.render 'error',  error: err 
 
+allowCrossDomain = (req, res, next) ->
+  res.header 'Access-Control-Allow-Origin', '*'
+  res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS'
+  res.header 'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With'
+  # intercept OPTIONS method
+  if 'OPTIONS' is req.method then res.send 200 else next()
+
 
 ###
 This function create developer server to work with project or docs
@@ -46,6 +53,8 @@ app.locals.pretty = true
 app.configure ->
   app.set 'views', path.join root_path, 'develop_suite/views'
   app.set 'view engine', 'jade'
+
+  app.use allowCrossDomain
 
   # its for stylus pre-compiller
   app.use stylus.middleware 
