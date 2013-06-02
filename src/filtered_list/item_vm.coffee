@@ -2,7 +2,8 @@
 This is passive VM example
 ###
 
-_         = require 'lodash'
+_             = require 'lodash'
+escape_regexp = require 'escape-regexp'
 
 Backbone.ViewModel = require 'backbone.viewmodel'
 
@@ -13,7 +14,7 @@ module.exports = class ItemViewModel extends Backbone.ViewModel
     data     : 'getFilteredData'
 
   buildFilter : ->
-    new RegExp @model.get('filter'), 'i'
+    new RegExp escape_regexp( @model.get('filter') ), 'i'
 
   getFilteredData : ->
     reFilter = @get 'filter'

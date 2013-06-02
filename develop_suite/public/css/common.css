@@ -12,6 +12,14 @@ body {
   display: inline;
   list-style-type: none;
 }
+#sortable-box {
+  padding-left: 20px;
+  margin-top: -20px;
+}
+#show-data {
+  clear: both;
+  padding: 20px;
+}
 .colorbox__rectangle__styled {
   margin: 20px;
   float: left;
@@ -27,7 +35,7 @@ body {
   list-style-type: none;
   margin: 0 10px 0 0;
   padding: 0 0 2.5em;
-  height: 150px;
+  height: 250px;
   padding: 10px 15px 5px 5px;
 }
 .sortable__item {

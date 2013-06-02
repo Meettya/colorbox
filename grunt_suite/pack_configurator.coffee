@@ -24,6 +24,7 @@ get_pack_config = (filename) ->
       bundle : 
         list_wiget : path.join root_path, "src", filename
       replacement :
+        jquery    : path.join root_path, 'web_modules', 'jquery'
         lodash    : path.join root_path, 'web_modules', 'lodash'        
         backbone  : path.join root_path, 'web_modules', 'backbone'
         'backbone.marionette' : path.join root_path, 'web_modules', 'backbone.marionette'
