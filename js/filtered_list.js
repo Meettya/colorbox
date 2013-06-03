@@ -27,36 +27,8 @@ require = function(name, parent) {
   });
   return (_ref = module.exports) != null ? _ref : exports;
 };
-  dependencies = {"224262038":{"backbone":3339915730},"791485693":{"lodash":1154215551,"escape-regexp":2835257351,"backbone.viewmodel":1052468800},"1072739154":{"backbone.marionette":2486755085,"./templates/input_tmpl":1670492861},"1306716682":{"backbone.viewmodel":1052468800},"1693630646":{"backbone.marionette":2486755085,"./item_view":3684540465},"1771610674":{"./filtered_list/isolated_scroll":1907951500,"./filtered_list/app_layout":2134585997,"./filtered_list/base_model":4294125673,"./filtered_list/empty_model":3191490708,"./filtered_list/item_vm":791485693,"./filtered_list/item_collection":224262038,"./filtered_list/item_collection_view":1693630646,"./filtered_list/input_vm":1306716682,"./filtered_list/input_view":1072739154,"lodash":1154215551,"./filtered_list/resume_text_view":3929517705},"1907951500":{"jquery":2074025255},"2134585997":{"./templates/layout_tmpl":3730906345,"backbone.marionette":2486755085},"3191490708":{"backbone":3339915730},"3684540465":{"./templates/item_tmpl":2787892459,"backbone.marionette":2486755085},"3929517705":{"backbone.marionette":2486755085,"./templates/resume_tmpl":1255671186},"4294125673":{"backbone":3339915730}};
+  dependencies = {"791485693":{"lodash":1154215551,"backbone.viewmodel":1052468800,"escape-regexp":2835257351},"1072739154":{"backbone.marionette":2486755085,"./templates/input_tmpl":1670492861},"1306716682":{"backbone.viewmodel":1052468800},"1693630646":{"./item_view":3684540465,"backbone.marionette":2486755085},"1907951500":{"jquery":2074025255},"2134585997":{"./templates/layout_tmpl":3730906345,"backbone.marionette":2486755085},"2815934945":{"lodash":1154215551,"backbone.viewmodel":1052468800},"3577813655":{"./filtered_list/isolated_scroll":1907951500,"./filtered_list/app_layout":2134585997,"./filtered_list/base_model":4294125673,"./filtered_list/item_collection":4183211539,"lodash":1154215551,"./filtered_list/item_collection_view":1693630646,"./filtered_list/input_vm":1306716682,"./filtered_list/input_view":1072739154,"./filtered_list/resume_vm":2815934945,"./filtered_list/resume_text_view":3929517705},"3684540465":{"./templates/item_tmpl":2787892459,"backbone.marionette":2486755085},"3929517705":{"backbone.marionette":2486755085,"./templates/resume_tmpl":1255671186},"4183211539":{"./item_vm":791485693,"backbone":3339915730},"4294125673":{"backbone":3339915730}};
   sources = {
-"224262038": function(exports, module, require) {
-// /Users/meettya/github/colorbox/src/filtered_list/item_collection.coffee 
-/*
-This is our collections for items
-*/
-
-var Backbone, ItemsCollection, _ref,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-Backbone = require('backbone');
-
-module.exports = ItemsCollection = (function(_super) {
-  __extends(ItemsCollection, _super);
-
-  function ItemsCollection() {
-    _ref = ItemsCollection.__super__.constructor.apply(this, arguments);
-    return _ref;
-  }
-
-  ItemsCollection.prototype.comparator = function(element) {
-    return element.get('text');
-  };
-
-  return ItemsCollection;
-
-})(Backbone.Collection);
-},
 "791485693": function(exports, module, require) {
 // /Users/meettya/github/colorbox/src/filtered_list/item_vm.coffee 
 /*
@@ -309,84 +281,6 @@ module.exports = RectangleCollectionView = (function(_super) {
 
 })(Marionette.CollectionView);
 },
-"1771610674": function(exports, module, require) {
-// /Users/meettya/github/colorbox/src/filtered_list.coffee 
-/*
-This is filtered list example
-*/
-
-var AppLayout, BaseModel, EmptyModel, FAKE_COUNT, InputView, InputViewModel, ItemCollection, ItemCollectionView, ItemViewModel, ResumeTextView, buildFakeData, init_fn, _;
-
-require('./filtered_list/isolated_scroll');
-
-_ = require('lodash');
-
-AppLayout = require('./filtered_list/app_layout');
-
-BaseModel = require('./filtered_list/base_model');
-
-EmptyModel = require('./filtered_list/empty_model');
-
-ItemViewModel = require('./filtered_list/item_vm');
-
-ItemCollection = require('./filtered_list/item_collection');
-
-ItemCollectionView = require('./filtered_list/item_collection_view');
-
-InputViewModel = require('./filtered_list/input_vm');
-
-InputView = require('./filtered_list/input_view');
-
-ResumeTextView = require('./filtered_list/resume_text_view');
-
-buildFakeData = function(num) {
-  return _.times(num, function() {
-    return {
-      text: Faker.Name.findName()
-    };
-  });
-};
-
-FAKE_COUNT = 1024;
-
-init_fn = function(main_elem) {
-  var base_model, data, input_vm, item_vm, layout, models, resume_model;
-
-  layout = new AppLayout;
-  layout.render();
-  $(main_elem).append(layout.el);
-  data = buildFakeData(FAKE_COUNT);
-  base_model = new BaseModel({
-    data: data
-  });
-  resume_model = new EmptyModel({
-    total: FAKE_COUNT,
-    filtered: FAKE_COUNT
-  });
-  input_vm = new InputViewModel(base_model);
-  item_vm = new ItemViewModel(base_model);
-  models = new ItemCollection(item_vm.get('data'));
-  item_vm.on('change:data', function() {
-    console.time('change:data');
-    models.reset(item_vm.get('data'));
-    console.timeEnd('change:data');
-    return resume_model.set('filtered', _.size(item_vm.get('data')));
-  });
-  layout.inputRegion.show(new InputView({
-    model: input_vm
-  }));
-  console.time('part');
-  layout.contentRegion.show(new ItemCollectionView({
-    collection: models
-  }));
-  console.timeEnd('part');
-  return layout.dataRegion.show(new ResumeTextView({
-    model: resume_model
-  }));
-};
-
-module.exports = init_fn;
-},
 "1907951500": function(exports, module, require) {
 // /Users/meettya/github/colorbox/src/filtered_list/isolated_scroll.coffee 
 /*
@@ -476,6 +370,53 @@ var self = locals || {};
 jade.indent = [];
 buf.push("" + (jade.escape((jade.interp = self.text) == null ? '' : jade.interp)) + "");return buf.join("");
 }},
+"2815934945": function(exports, module, require) {
+// /Users/meettya/github/colorbox/src/filtered_list/resume_vm.coffee 
+/*
+This is simply VM to encapsulate logic
+*/
+
+var ResumeViewModel, _, _ref,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+_ = require('lodash');
+
+Backbone.ViewModel = require('backbone.viewmodel');
+
+module.exports = ResumeViewModel = (function(_super) {
+  __extends(ResumeViewModel, _super);
+
+  function ResumeViewModel() {
+    _ref = ResumeViewModel.__super__.constructor.apply(this, arguments);
+    return _ref;
+  }
+
+  ResumeViewModel.prototype.mapping = {
+    total: 'getTotalDataCount',
+    filtered: 'getFilteredDataCount'
+  };
+
+  ResumeViewModel.prototype.initialize = function() {
+    var _this = this;
+
+    return this.model.get('filtered_data').on('change', function() {
+      return _this.update();
+    });
+  };
+
+  ResumeViewModel.prototype.getTotalDataCount = function() {
+    return this.get('total') || this.model.get('raw_data').length;
+  };
+
+  ResumeViewModel.prototype.getFilteredDataCount = function() {
+    return this.model.get('filtered_data').length;
+  };
+
+  return ResumeViewModel;
+
+})(Backbone.ViewModel);
+},
 "2835257351": function(exports, module, require) {
 // /Users/meettya/github/colorbox/node_modules/escape-regexp/index.js 
 
@@ -490,36 +431,79 @@ buf.push("" + (jade.escape((jade.interp = self.text) == null ? '' : jade.interp)
 module.exports = function(str){
   return String(str).replace(/([.*+?=^!:${}()|[\]\/\\])/g, '\\$1');
 };},
-"3191490708": function(exports, module, require) {
-// /Users/meettya/github/colorbox/src/filtered_list/empty_model.coffee 
-/*
-This is dystrophic base Model
-*/
-
-var Backbone, EmptyModel, _ref,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-Backbone = require('backbone');
-
-module.exports = EmptyModel = (function(_super) {
-  __extends(EmptyModel, _super);
-
-  function EmptyModel() {
-    _ref = EmptyModel.__super__.constructor.apply(this, arguments);
-    return _ref;
-  }
-
-  return EmptyModel;
-
-})(Backbone.Model);
-},
 "3339915730": function(exports, module, require) {
 // /Users/meettya/github/colorbox/web_modules/backbone.coffee 
 /*
 This is Backbone shim
 */
 module.exports = this.Backbone;
+},
+"3577813655": function(exports, module, require) {
+// /Users/meettya/github/colorbox/src/filtered_list.coffee 
+/*
+This is filtered list example
+*/
+
+var AppLayout, BaseModel, FAKE_COUNT, InputView, InputViewModel, ItemCollection, ItemCollectionView, ResumeTextView, ResumeViewModel, buildFakeData, init_fn, _;
+
+require('./filtered_list/isolated_scroll');
+
+_ = require('lodash');
+
+AppLayout = require('./filtered_list/app_layout');
+
+BaseModel = require('./filtered_list/base_model');
+
+ItemCollection = require('./filtered_list/item_collection');
+
+ItemCollectionView = require('./filtered_list/item_collection_view');
+
+InputViewModel = require('./filtered_list/input_vm');
+
+InputView = require('./filtered_list/input_view');
+
+ResumeViewModel = require('./filtered_list/resume_vm');
+
+ResumeTextView = require('./filtered_list/resume_text_view');
+
+buildFakeData = function(num) {
+  return _.times(num, function() {
+    return {
+      text: Faker.Name.findName()
+    };
+  });
+};
+
+FAKE_COUNT = 1024;
+
+init_fn = function(main_elem) {
+  var base_model, data, input_vm, layout, models, resume_vm;
+
+  layout = new AppLayout;
+  layout.render();
+  $(main_elem).append(layout.el);
+  data = buildFakeData(FAKE_COUNT);
+  base_model = new BaseModel({
+    data: data
+  });
+  input_vm = new InputViewModel(base_model);
+  models = new ItemCollection(base_model);
+  resume_vm = new ResumeViewModel({
+    raw_data: data,
+    filtered_data: models
+  });
+  layout.inputRegion.show(new InputView({
+    model: input_vm
+  }));
+  layout.contentRegion.show(new ItemCollectionView({
+    collection: models
+  }));
+  return layout.dataRegion.show(new ResumeTextView({
+    model: resume_vm
+  }));
+};
+
+module.exports = init_fn;
 },
 "3684540465": function(exports, module, require) {
 // /Users/meettya/github/colorbox/src/filtered_list/item_view.coffee 
@@ -595,6 +579,51 @@ module.exports = ItemView = (function(_super) {
 
 })(Marionette.ItemView);
 },
+"4183211539": function(exports, module, require) {
+// /Users/meettya/github/colorbox/src/filtered_list/item_collection.coffee 
+/*
+This is our collections for items
+*/
+
+var Backbone, ItemViewModel, ItemsCollection,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  __slice = [].slice;
+
+Backbone = require('backbone');
+
+ItemViewModel = require('./item_vm');
+
+module.exports = ItemsCollection = (function(_super) {
+  __extends(ItemsCollection, _super);
+
+  function ItemsCollection() {
+    var options, raw_model;
+
+    raw_model = arguments[0], options = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+    this._item_vm_ = new ItemViewModel(raw_model);
+    ItemsCollection.__super__.constructor.apply(this, [this._item_vm_.get('data')].concat(__slice.call(options)));
+  }
+
+  ItemsCollection.prototype.initialize = function() {
+    var _this = this;
+
+    return this._item_vm_.on('change:data', function() {
+      console.time('change:data');
+      _this.reset(_this._item_vm_.get('data'));
+      _this.trigger('change');
+      return console.timeEnd('change:data');
+    });
+  };
+
+  ItemsCollection.prototype.comparator = function(element) {
+    return element.get('text');
+  };
+
+  return ItemsCollection;
+
+})(Backbone.Collection);
+},
 "4294125673": function(exports, module, require) {
 // /Users/meettya/github/colorbox/src/filtered_list/base_model.coffee 
 /*
@@ -626,6 +655,6 @@ module.exports = BaseModel = (function(_super) {
 }};
 /* bundle export */
 this.ExamplePackage = {
-  list_wiget : require(1771610674)
+  list_wiget : require(3577813655)
 };
 }).call(this);
