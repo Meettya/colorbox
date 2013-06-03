@@ -9,16 +9,15 @@ _         = require 'lodash'
 
 AppLayout = require './filtered_list/app_layout'
 
-BaseModel         = require './filtered_list/base_model'
-EmptyModel        = require './filtered_list/empty_model'
+BaseModel = require './filtered_list/base_model'
 
-ItemViewModel      = require './filtered_list/item_vm'
-ItemCollection    = require './filtered_list/item_collection'
-ItemCollectionView = require './filtered_list/item_collection_view'
+ItemCollection      = require './filtered_list/item_collection'
+ItemCollectionView  = require './filtered_list/item_collection_view'
 
 InputViewModel  = require './filtered_list/input_vm'
 InputView       = require './filtered_list/input_view'
 
+ResumeViewModel = require './filtered_list/resume_vm'
 ResumeTextView  = require './filtered_list/resume_text_view'
 
 buildFakeData = (num) ->
@@ -33,32 +32,21 @@ init_fn = (main_elem) ->
   layout.render()
   $(main_elem).append layout.el
 
+  # make data
   data = buildFakeData FAKE_COUNT
   
+  # make base model from data
   base_model = new BaseModel { data }
 
-  resume_model = new EmptyModel total : FAKE_COUNT, filtered : FAKE_COUNT
-
+  # build our viewmodels && collections models
   input_vm  = new InputViewModel base_model
-  item_vm   = new ItemViewModel base_model
+  models    = new ItemCollection base_model
+  resume_vm = new ResumeViewModel raw_data : data, filtered_data : models
 
-  models = new ItemCollection item_vm.get 'data'
-  # its only one interaction point 
-  # on 400 elements reset tooks only 50-100ms
-  # and up to 800ms to render long list
-  item_vm.on 'change:data', -> 
-    console.time 'change:data'
-    models.reset item_vm.get 'data'
-    console.timeEnd 'change:data'
-    # add some statistics
-    resume_model.set 'filtered', _.size item_vm.get 'data'
-
-
-  layout.inputRegion.show new InputView model : input_vm
-  console.time 'part'
+  # show all
+  layout.inputRegion.show   new InputView model : input_vm
   layout.contentRegion.show new ItemCollectionView collection: models
-  console.timeEnd 'part'
-  layout.dataRegion.show new ResumeTextView model : resume_model
+  layout.dataRegion.show    new ResumeTextView model : resume_vm
 
 
 module.exports = init_fn
